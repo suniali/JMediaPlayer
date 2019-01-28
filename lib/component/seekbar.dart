@@ -17,6 +17,7 @@ class _SeekBarState extends State<SeekBar> {
         width: 125.0,
         height: 125.0,
         child: RedialSeekBar(
+          progressPrecent: 0.2,
           child: ClipOval(
             clipper: CircleClipper(),
             child: Image.network(

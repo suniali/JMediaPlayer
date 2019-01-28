@@ -33,18 +33,17 @@ class _RedialSeekBarState extends State<RedialSeekBar> {
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-        painter: RadialSeekBarPainter(
-            trackWidth: widget.trackWidth,
-            trackColor: widget.trackColor,
-            progressWidth: widget.progressWidth,
-            progressColor: widget.progressColor,
-            progressPrecent: widget.progressPrecent,
-            thumbWidth: widget.thumbWidth,
-            thumbColor: widget.thumbColor,
-            thumbPosition: widget.thumbPosition),
-            child: widget.child,
-            );
-            
+      painter: RadialSeekBarPainter(
+          trackWidth: widget.trackWidth,
+          trackColor: widget.trackColor,
+          progressWidth: widget.progressWidth,
+          progressColor: widget.progressColor,
+          progressPrecent: widget.progressPrecent,
+          thumbWidth: widget.thumbWidth,
+          thumbColor: widget.thumbColor,
+          thumbPosition: widget.thumbPosition),
+      child: widget.child,
+    );
   }
 }
 
@@ -93,6 +92,11 @@ class RadialSeekBarPainter extends CustomPainter {
         rasius,
         //paint
         trackPaint);
+
+    //Paint Progressbar
+    final progressAngle = pi * 2 * progressPrecent;
+    canvas.drawArc(Rect.fromCircle(center: center, radius: rasius), -pi / 2,
+        progressAngle, false, progressPaint);
   }
 
   @override
