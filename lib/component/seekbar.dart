@@ -20,7 +20,7 @@ class _SeekBarState extends State<SeekBar> {
           child: ClipOval(
             clipper: CircleClipper(),
             child: Image.network(
-              demoPlaylist.songs[0].albumArtUrl,
+              demoPlaylist.songs[1].albumArtUrl,
               fit: BoxFit.cover,
             ),
           ),
