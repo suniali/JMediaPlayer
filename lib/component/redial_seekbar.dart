@@ -41,7 +41,10 @@ class _RedialSeekBarState extends State<RedialSeekBar> {
             progressPrecent: widget.progressPrecent,
             thumbWidth: widget.thumbWidth,
             thumbColor: widget.thumbColor,
-            thumbPosition: widget.thumbPosition));
+            thumbPosition: widget.thumbPosition),
+            child: widget.child,
+            );
+            
   }
 }
 
