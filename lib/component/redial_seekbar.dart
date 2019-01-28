@@ -69,6 +69,7 @@ class RadialSeekBarPainter extends CustomPainter {
   })  : trackPaint = Paint()
           ..color = trackColor
           ..style = PaintingStyle.stroke
+          ..strokeCap=StrokeCap.round
           ..strokeWidth = trackWidth,
         progressPaint = Paint()
           ..color = progressColor
@@ -97,6 +98,15 @@ class RadialSeekBarPainter extends CustomPainter {
     final progressAngle = pi * 2 * progressPrecent;
     canvas.drawArc(Rect.fromCircle(center: center, radius: rasius), -pi / 2,
         progressAngle, false, progressPaint);
+
+        //Paint thumb
+        final thumbAngle=2*pi*thumbPosition-(pi/2);
+        final thumbX=cos(thumbAngle)*rasius;
+        final thumbY=sin(thumbAngle)*rasius;
+        final thumbCenter=Offset(thumbX,thumbY)+center;
+        final thumbRadius=thumbWidth/2;
+        canvas.drawCircle(thumbCenter, thumbRadius, thumbPaint);
+
   }
 
   @override
