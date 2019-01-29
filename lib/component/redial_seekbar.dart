@@ -11,6 +11,8 @@ class RedialSeekBar extends StatefulWidget {
   final double thumbWidth;
   final Color thumbColor;
   final double thumbPosition;
+  final EdgeInsets outerPadding;
+  final EdgeInsets insidePadding;
   final Widget child;
 
   RedialSeekBar({
@@ -22,6 +24,8 @@ class RedialSeekBar extends StatefulWidget {
     this.thumbWidth = 10.0,
     this.thumbColor = Colors.black,
     this.thumbPosition = 0.0,
+    this.outerPadding=const EdgeInsets.all(0.0),
+    this.insidePadding=const EdgeInsets.all(0.0),
     this.child,
   });
 
@@ -30,10 +34,21 @@ class RedialSeekBar extends StatefulWidget {
 }
 
 class _RedialSeekBarState extends State<RedialSeekBar> {
+
+  EdgeInsets _insetsForPadding()
+  {
+    //make room for the painted track,progress,and thumb.We devided by 2.0
+    //Beacause we want to allow flush painting  against the track , so we only need
+    //to acount the thickness out side the track ,not inside
+    final outerThickness=max(
+      widget.trackWidth, max(widget.progressWidth, widget.thumbWidth))/2;
+      return EdgeInsets.all(outerThickness);
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: RadialSeekBarPainter(
+      foregroundPainter: RadialSeekBarPainter(
           trackWidth: widget.trackWidth,
           trackColor: widget.trackColor,
           progressWidth: widget.progressWidth,
@@ -42,7 +57,10 @@ class _RedialSeekBarState extends State<RedialSeekBar> {
           thumbWidth: widget.thumbWidth,
           thumbColor: widget.thumbColor,
           thumbPosition: widget.thumbPosition),
-      child: widget.child,
+      child: Padding(
+        padding:_insetsForPadding()+widget.insidePadding,
+        child: widget.child,
+      ),
     );
   }
 }
@@ -69,7 +87,7 @@ class RadialSeekBarPainter extends CustomPainter {
   })  : trackPaint = Paint()
           ..color = trackColor
           ..style = PaintingStyle.stroke
-          ..strokeCap=StrokeCap.round
+          ..strokeCap = StrokeCap.round
           ..strokeWidth = trackWidth,
         progressPaint = Paint()
           ..color = progressColor
@@ -83,8 +101,12 @@ class RadialSeekBarPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final outerThickness = max(trackWidth, max(progressWidth, thumbWidth));
+    final Size constraintSize =
+        Size(size.width - outerThickness, size.height - outerThickness);
+
     final center = Offset(size.width / 2, size.height / 2);
-    final rasius = min(size.width, size.height) / 2;
+    final rasius = min(constraintSize.width, constraintSize.height) / 2;
     // Paint track
     canvas.drawCircle(
         //center
@@ -99,14 +121,13 @@ class RadialSeekBarPainter extends CustomPainter {
     canvas.drawArc(Rect.fromCircle(center: center, radius: rasius), -pi / 2,
         progressAngle, false, progressPaint);
 
-        //Paint thumb
-        final thumbAngle=2*pi*thumbPosition-(pi/2);
-        final thumbX=cos(thumbAngle)*rasius;
-        final thumbY=sin(thumbAngle)*rasius;
-        final thumbCenter=Offset(thumbX,thumbY)+center;
-        final thumbRadius=thumbWidth/2;
-        canvas.drawCircle(thumbCenter, thumbRadius, thumbPaint);
-
+    //Paint thumb
+    final thumbAngle = 2 * pi * thumbPosition - (pi / 2);
+    final thumbX = cos(thumbAngle) * rasius;
+    final thumbY = sin(thumbAngle) * rasius;
+    final thumbCenter = Offset(thumbX, thumbY) + center;
+    final thumbRadius = thumbWidth / 2;
+    canvas.drawCircle(thumbCenter, thumbRadius, thumbPaint);
   }
 
   @override
