@@ -15,8 +15,8 @@ class _SeekBarState extends State<SeekBar> {
     return Expanded(
       child: Center(
           child: Container(
-        width: 140.0,
-        height: 140.0,
+        width: 200.0,
+        height: 200.0,
         child: RedialSeekBar(
           progressPrecent: 0.25,
           thumbPosition: 0.25,
