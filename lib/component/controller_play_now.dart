@@ -63,7 +63,7 @@ class PlayPauseButton extends StatelessWidget {
         splashColor: lightAccentColor,
         highlightColor: lightAccentColor.withOpacity(0.5),
         child: Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(16.0),
           child: Icon(
             Icons.play_arrow,
             color: darkAccentColor,

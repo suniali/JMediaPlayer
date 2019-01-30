@@ -15,10 +15,11 @@ class _FooterPlayNowState extends State<FooterPlayNow> {
       width: double.infinity,
       child: Material(
         color: accentColor,
-         shadowColor: Color(0x44000000),
-              child: Padding(
-           padding: const EdgeInsets.only(top: 40.0, bottom: 50.0), 
+        shadowColor: Color(0x44000000),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 50.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               DetailSongPlayNow(),
               ControllerPlayNow(),
