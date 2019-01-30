@@ -15,9 +15,10 @@ class _PlayNowState extends State<PlayNow> {
           children: <Widget>[
             //Image.asset(""),
             Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 //seekbar
-                SeekBar(),
+                   //SeekBar(),
                 //virtualizer
                 Container(
                   width: double.infinity,
