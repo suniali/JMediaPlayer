@@ -1,12 +1,30 @@
+import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/material.dart';
+import 'package:jmedia_player/component/songs.dart';
 import 'package:jmedia_player/theme/theme.dart';
 
 class ControllerPlayNow extends StatefulWidget {
+  AudioPlayer player = AudioPlayer();
   @override
   _ControllerPlayNowState createState() => _ControllerPlayNowState();
 }
 
 class _ControllerPlayNowState extends State<ControllerPlayNow> {
+  Future<void> play() async {
+    await widget.player.play(demoPlaylist.songs[0].audioUrl);
+    setState(() {});
+  }
+
+  Future<void> pause() async {
+    await widget.player.pause();
+    setState(() {});
+  }
+
+  Future<void> stop() async {
+    await widget.player.stop();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,7 +36,7 @@ class _ControllerPlayNowState extends State<ControllerPlayNow> {
         Expanded(
           child: Container(),
         ),
-        new PlayPauseButton(),
+        new PlayPauseButton(()=>play()),
         Expanded(
           child: Container(),
         ),
@@ -29,6 +47,8 @@ class _ControllerPlayNowState extends State<ControllerPlayNow> {
       ],
     );
   }
+
+  static AudioPlayer() {}
 }
 
 class NextButton extends StatelessWidget {
@@ -50,9 +70,8 @@ class NextButton extends StatelessWidget {
 }
 
 class PlayPauseButton extends StatelessWidget {
-  const PlayPauseButton({
-    Key key,
-  }) : super(key: key);
+  final Function onPressed;
+  PlayPauseButton(this.onPressed);
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +89,7 @@ class PlayPauseButton extends StatelessWidget {
             size: 50.0,
           ),
         ),
-        onPressed: () {
-          //TODO:
-        });
+        onPressed:onPressed );
   }
 }
 
