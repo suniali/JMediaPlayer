@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jmedia_player/component/play_now.dart';
 import 'package:jmedia_player/pages/tabs/album_page.dart';
+import 'package:jmedia_player/pages/tabs/all_page.dart';
+import 'package:jmedia_player/pages/tabs/favarite_page.dart';
 import 'package:jmedia_player/pages/tabs/offline_page.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -27,8 +29,10 @@ class _MyHomePageState extends State<MyHomePage>
     // TODO: implement initState
     super.initState();
     tabController = TabController(vsync: this, length: tabs.length);
+    pagerWidget.add(FaveritePage());
     pagerWidget.add(OfflinePage());
     pagerWidget.add(AlbumPage());
+    pagerWidget.add(AllPage());
   }
 
   @override
