@@ -10,14 +10,25 @@ class ControllerPlayNow extends StatefulWidget {
 }
 
 class _ControllerPlayNowState extends State<ControllerPlayNow> {
+  bool isProccessing = false;
   Future<void> play() async {
+    setState(() {
+      isProccessing = true;
+    });
     if (widget.player.state == AudioPlayerState.STOPPED ||
         widget.player.state == AudioPlayerState.PAUSED) {
       await widget.player.play(demoPlaylist.songs[0].audioUrl);
-      setState(() {});
+      setState(() {
+        isProccessing = false;
+      });
     } else if (widget.player.state == AudioPlayerState.PLAYING) {
+      setState(() {
+        isProccessing = true;
+      });
       await widget.player.pause();
-      setState(() {});
+      setState(() {
+        isProccessing = false;
+      });
     }
   }
 
@@ -37,7 +48,7 @@ class _ControllerPlayNowState extends State<ControllerPlayNow> {
         Expanded(
           child: Container(),
         ),
-        new PlayPauseButton(() => play()),
+        new PlayPauseButton(() => play(), isProccessing, widget.player.state),
         Expanded(
           child: Container(),
         ),
@@ -72,25 +83,61 @@ class NextButton extends StatelessWidget {
 
 class PlayPauseButton extends StatelessWidget {
   final Function onPressed;
-  PlayPauseButton(this.onPressed);
+  bool isProccessing;
+  final AudioPlayerState statePlayer;
+  PlayPauseButton(this.onPressed, this.isProccessing, this.statePlayer);
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-        fillColor: Colors.white,
-        shape: CircleBorder(),
-        elevation: 10.0,
-        splashColor: lightAccentColor,
-        highlightColor: lightAccentColor.withOpacity(0.5),
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Icon(
-            Icons.play_arrow,
-            color: darkAccentColor,
-            size: 50.0,
+    if (!isProccessing) {
+      if (statePlayer == AudioPlayerState.PAUSED ||
+          statePlayer == AudioPlayerState.STOPPED ||
+          statePlayer == AudioPlayerState.COMPLETED) {
+        return RawMaterialButton(
+            fillColor: Colors.white,
+            shape: CircleBorder(),
+            elevation: 10.0,
+            splashColor: lightAccentColor,
+            highlightColor: lightAccentColor.withOpacity(0.5),
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Icon(
+                Icons.play_arrow,
+                color: darkAccentColor,
+                size: 50.0,
+              ),
+            ),
+            onPressed: onPressed);
+      } else {
+        return RawMaterialButton(
+            fillColor: Colors.white,
+            shape: CircleBorder(),
+            elevation: 10.0,
+            splashColor: lightAccentColor,
+            highlightColor: lightAccentColor.withOpacity(0.5),
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Icon(
+                Icons.pause,
+                color: darkAccentColor,
+                size: 50.0,
+              ),
+            ),
+            onPressed: onPressed);
+      }
+    } else {
+      return RawMaterialButton(
+          fillColor: Colors.white,
+          shape: CircleBorder(),
+          elevation: 10.0,
+          splashColor: lightAccentColor,
+          highlightColor: lightAccentColor.withOpacity(0.5),
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: SizedBox(height: 50.0,width: 50.0, child:CircularProgressIndicator(),)
           ),
-        ),
-        onPressed: onPressed);
+          onPressed: onPressed);
+    }
   }
 }
 
