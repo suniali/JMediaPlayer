@@ -61,7 +61,9 @@ class ListAlbum extends StatelessWidget {
       itemCount: albumList.length,
       itemBuilder: (BuildContext cotext, int index) {
         return ListTile(
-          leading: CircleAvatar(child: Image.network(albumList[index].coverUrl),),
+          leading: CircleAvatar(
+            child: Image.network(albumList[index].coverUrl),
+          ),
           title: Text(
             albumList[index].title,
             maxLines: 1,

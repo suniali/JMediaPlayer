@@ -39,7 +39,8 @@ class AllList extends StatelessWidget {
       itemCount: demoPlaylist.songs.length,
       itemBuilder: (BuildContext cotext, int index) {
         return ListTile(
-          leading: Image.network(demoPlaylist.songs[index].albumArtUrl),
+          leading: CircleAvatar(
+              child: Image.network(demoPlaylist.songs[index].albumArtUrl)),
           title: Text(
             demoPlaylist.songs[index].songTitle,
             maxLines: 1,
