@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jmedia_player/component/album_page.dart';
-import 'package:jmedia_player/component/offline_page.dart';
 import 'package:jmedia_player/component/play_now.dart';
+import 'package:jmedia_player/pages/tabs/album_page.dart';
+import 'package:jmedia_player/pages/tabs/offline_page.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
