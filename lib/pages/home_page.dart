@@ -24,7 +24,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           actions: <Widget>[],
         ),
-        body: PlayNow()
+        body: Container(
+          color: Colors.black54,
+          child: PlayNow(),
+        )
     );
   }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jmedia_player/component/songs.dart';
 
 class DetailSongPlayNow extends StatefulWidget {
+  int positionSong;
+  DetailSongPlayNow({this.positionSong});
   @override
   _DetailSongPlayNowState createState() => _DetailSongPlayNowState();
 }
@@ -10,10 +13,11 @@ class _DetailSongPlayNowState extends State<DetailSongPlayNow> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(40.0),
-      child: RichText(
+      child: RichText(textAlign: TextAlign.center,
         text: TextSpan(text: "", children: [
           TextSpan(
-            text: "song title\n",
+            text:
+                "${demoPlaylist.songs[widget.positionSong].songTitle}\n",
             style: TextStyle(
                 color: Colors.white,
                 fontSize: 14.0,
@@ -22,7 +26,7 @@ class _DetailSongPlayNowState extends State<DetailSongPlayNow> {
                 letterSpacing: 4.0),
           ),
           TextSpan(
-              text: "Artists Name",
+              text: demoPlaylist.songs[widget.positionSong].artist,
               style: TextStyle(
                   color: Colors.white.withOpacity(0.75),
                   letterSpacing: 3.0,

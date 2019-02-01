@@ -1,13 +1,14 @@
 import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/material.dart';
 import 'package:jmedia_player/component/detail_song_play_now.dart';
+import 'package:jmedia_player/component/play_now.dart';
 import 'package:jmedia_player/component/songs.dart';
 import 'package:jmedia_player/theme/theme.dart';
 
 class ControllerPlayNow extends StatefulWidget {
- final AudioPlayer jPlayer;
- int positionSong=0;
-  ControllerPlayNow({this.jPlayer});
+  final AudioPlayer jPlayer;
+  int positionSong;
+  ControllerPlayNow({this.jPlayer}) : this.positionSong = 0;
   @override
   _ControllerPlayNowState createState() => _ControllerPlayNowState();
 }
@@ -17,10 +18,12 @@ class _ControllerPlayNowState extends State<ControllerPlayNow> {
   Future<void> play() async {
     setState(() {
       isProccessing = true;
+      PlayNow().positionPlayer = widget.positionSong;
     });
     if (widget.jPlayer.state == AudioPlayerState.STOPPED ||
         widget.jPlayer.state == AudioPlayerState.PAUSED) {
-      await widget.jPlayer.play(demoPlaylist.songs[widget.positionSong].audioUrl);
+      await widget.jPlayer
+          .play(demoPlaylist.songs[widget.positionSong].audioUrl);
       setState(() {
         isProccessing = false;
       });
@@ -44,37 +47,40 @@ class _ControllerPlayNowState extends State<ControllerPlayNow> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      child: Material(
-        color: accentColor,
-        shadowColor: Color(0x44000000),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 50.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              DetailSongPlayNow(),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Container(),
-                  ),
-                  new PreviousButton(),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  new PlayPauseButton(
-                      () => play(), isProccessing, widget.jPlayer.state),
-                  Expanded(
-                    child: Container(),
-                  ),
-                  new NextButton(),
-                  Expanded(
-                    child: Container(),
-                  )
-                ],
-              )
-            ],
-          ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 50.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            DetailSongPlayNow(positionSong: widget.positionSong),
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Container(),
+                ),
+                Material(
+                    shape: StadiumBorder(),
+                    color: Colors.transparent,
+                    shadowColor: Color(0x44000000),
+                    child: PreviousButton()),
+                Expanded(
+                  child: Container(),
+                ),
+                PlayPauseButton(
+                    () => play(), isProccessing, widget.jPlayer.state),
+                Expanded(
+                  child: Container(),
+                ),
+                Material(
+                    color: Colors.transparent,
+                    shadowColor: Color(0x44000000),
+                    child: NextButton()),
+                Expanded(
+                  child: Container(),
+                )
+              ],
+            )
+          ],
         ),
       ),
     );
