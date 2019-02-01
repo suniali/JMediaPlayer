@@ -36,13 +36,25 @@ class _AlbumPageState extends State<AlbumPage> {
   }
 
   void findArtists() {
-    for (int i = 0; i < demoPlaylist.songs.length; i++) {
-      AlbumModel albumModel = AlbumModel();
-      albumModel.title = demoPlaylist.songs[i].songTitle;
-      albumModel.artist = demoPlaylist.songs[i].artist;
-      albumModel.coverUrl = demoPlaylist.songs[i].albumArtUrl;
-      albumList.add(albumModel);
-    }
+    bool isExist=false;
+    demoPlaylist.songs.forEach((item){
+      albumList.forEach((item1){
+        if(item1.artist==item.artist)
+        {
+          isExist=true;
+          return;
+        }
+      });
+       if(isExist==false)
+      {
+         AlbumModel albumModel = AlbumModel();
+          albumModel.title = item.songTitle;
+          albumModel.artist = item.artist;
+          albumModel.coverUrl = item.albumArtUrl;
+          albumList.add(albumModel);
+          isExist=false;
+      }
+    });
   }
 }
 
