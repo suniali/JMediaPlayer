@@ -1,7 +1,6 @@
+import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/material.dart';
-import 'package:jmedia_player/component/footer_play_now.dart';
-import 'package:jmedia_player/component/seekbar.dart';
-import 'package:jmedia_player/theme/theme.dart';
+import 'package:jmedia_player/component/controller_play_now.dart';
 
 class PlayNow extends StatefulWidget {
   @override
@@ -9,6 +8,7 @@ class PlayNow extends StatefulWidget {
 }
 
 class _PlayNowState extends State<PlayNow> {
+  final AudioPlayer player=AudioPlayer();
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -26,7 +26,7 @@ class _PlayNowState extends State<PlayNow> {
                 ),
 
                 //song title,artist name,and controls
-                FooterPlayNow(),
+                ControllerPlayNow(jPlayer: player,),
               ],
             )
           ],

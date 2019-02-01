@@ -1,10 +1,13 @@
 import 'package:audioplayer/audioplayer.dart';
 import 'package:flutter/material.dart';
+import 'package:jmedia_player/component/detail_song_play_now.dart';
 import 'package:jmedia_player/component/songs.dart';
 import 'package:jmedia_player/theme/theme.dart';
 
 class ControllerPlayNow extends StatefulWidget {
-  AudioPlayer player = AudioPlayer();
+ final AudioPlayer jPlayer;
+ int positionSong=0;
+  ControllerPlayNow({this.jPlayer});
   @override
   _ControllerPlayNowState createState() => _ControllerPlayNowState();
 }
@@ -15,17 +18,17 @@ class _ControllerPlayNowState extends State<ControllerPlayNow> {
     setState(() {
       isProccessing = true;
     });
-    if (widget.player.state == AudioPlayerState.STOPPED ||
-        widget.player.state == AudioPlayerState.PAUSED) {
-      await widget.player.play(demoPlaylist.songs[0].audioUrl);
+    if (widget.jPlayer.state == AudioPlayerState.STOPPED ||
+        widget.jPlayer.state == AudioPlayerState.PAUSED) {
+      await widget.jPlayer.play(demoPlaylist.songs[widget.positionSong].audioUrl);
       setState(() {
         isProccessing = false;
       });
-    } else if (widget.player.state == AudioPlayerState.PLAYING) {
+    } else if (widget.jPlayer.state == AudioPlayerState.PLAYING) {
       setState(() {
         isProccessing = true;
       });
-      await widget.player.pause();
+      await widget.jPlayer.pause();
       setState(() {
         isProccessing = false;
       });
@@ -33,34 +36,49 @@ class _ControllerPlayNowState extends State<ControllerPlayNow> {
   }
 
   Future<void> stop() async {
-    await widget.player.stop();
+    await widget.jPlayer.stop();
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(),
+    return Container(
+      width: double.infinity,
+      child: Material(
+        color: accentColor,
+        shadowColor: Color(0x44000000),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 50.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              DetailSongPlayNow(),
+              Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Container(),
+                  ),
+                  new PreviousButton(),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  new PlayPauseButton(
+                      () => play(), isProccessing, widget.jPlayer.state),
+                  Expanded(
+                    child: Container(),
+                  ),
+                  new NextButton(),
+                  Expanded(
+                    child: Container(),
+                  )
+                ],
+              )
+            ],
+          ),
         ),
-        new PreviousButton(),
-        Expanded(
-          child: Container(),
-        ),
-        new PlayPauseButton(() => play(), isProccessing, widget.player.state),
-        Expanded(
-          child: Container(),
-        ),
-        new NextButton(),
-        Expanded(
-          child: Container(),
-        )
-      ],
+      ),
     );
   }
-
-  static AudioPlayer() {}
 }
 
 class NextButton extends StatelessWidget {
@@ -133,9 +151,12 @@ class PlayPauseButton extends StatelessWidget {
           splashColor: lightAccentColor,
           highlightColor: lightAccentColor.withOpacity(0.5),
           child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: SizedBox(height: 50.0,width: 50.0, child:CircularProgressIndicator(),)
-          ),
+              padding: EdgeInsets.all(16.0),
+              child: SizedBox(
+                height: 50.0,
+                width: 50.0,
+                child: CircularProgressIndicator(),
+              )),
           onPressed: onPressed);
     }
   }
