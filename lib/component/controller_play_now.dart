@@ -11,13 +11,14 @@ class ControllerPlayNow extends StatefulWidget {
 
 class _ControllerPlayNowState extends State<ControllerPlayNow> {
   Future<void> play() async {
-    await widget.player.play(demoPlaylist.songs[0].audioUrl);
-    setState(() {});
-  }
-
-  Future<void> pause() async {
-    await widget.player.pause();
-    setState(() {});
+    if (widget.player.state == AudioPlayerState.STOPPED ||
+        widget.player.state == AudioPlayerState.PAUSED) {
+      await widget.player.play(demoPlaylist.songs[0].audioUrl);
+      setState(() {});
+    } else if (widget.player.state == AudioPlayerState.PLAYING) {
+      await widget.player.pause();
+      setState(() {});
+    }
   }
 
   Future<void> stop() async {
@@ -36,7 +37,7 @@ class _ControllerPlayNowState extends State<ControllerPlayNow> {
         Expanded(
           child: Container(),
         ),
-        new PlayPauseButton(()=>play()),
+        new PlayPauseButton(() => play()),
         Expanded(
           child: Container(),
         ),
@@ -89,7 +90,7 @@ class PlayPauseButton extends StatelessWidget {
             size: 50.0,
           ),
         ),
-        onPressed:onPressed );
+        onPressed: onPressed);
   }
 }
 
