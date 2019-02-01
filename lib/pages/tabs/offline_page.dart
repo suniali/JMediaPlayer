@@ -49,9 +49,9 @@ class OfflineList extends StatelessWidget {
       itemCount: offlineList.length,
       itemBuilder: (BuildContext cotext, int index) {
         return ListTile(
-          leading: Image.network(demoPlaylist.songs[index].albumArtUrl),
+          leading: Image.network(offlineList[index].coverUrl),
           title: Text(
-            demoPlaylist.songs[index].songTitle,
+            offlineList[index].title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
