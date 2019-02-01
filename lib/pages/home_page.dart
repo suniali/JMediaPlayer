@@ -14,10 +14,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
   List<Tab> tabs = [
+    Tab(text: "favarits", icon: Icon(Icons.favorite)),
     Tab(text: "Offline", icon: Icon(Icons.offline_bolt)),
     Tab(text: "Album", icon: Icon(Icons.album)),
     Tab(text: "All", icon: Icon(Icons.all_inclusive)),
-    Tab(text: "favarits", icon: Icon(Icons.favorite)),
   ];
   List<Widget> pagerWidget = [];
   TabController tabController;
