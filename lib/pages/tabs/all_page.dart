@@ -35,8 +35,9 @@ class AllList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
       itemCount: demoPlaylist.songs.length,
+      addAutomaticKeepAlives: true,
       itemBuilder: (BuildContext cotext, int index) {
         return ListTile(
           leading: CircleAvatar(
