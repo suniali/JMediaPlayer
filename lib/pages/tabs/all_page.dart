@@ -39,16 +39,21 @@ class AllList extends StatelessWidget {
       itemCount: demoPlaylist.songs.length,
       addAutomaticKeepAlives: true,
       itemBuilder: (BuildContext cotext, int index) {
-        return ListTile(
-          leading: CircleAvatar(
-              child: Image.network(demoPlaylist.songs[index].albumArtUrl)),
-          title: Text(
-            demoPlaylist.songs[index].songTitle,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+        return GestureDetector(
+                  child: ListTile(
+            leading: CircleAvatar(
+                child: Image.network(demoPlaylist.songs[index].albumArtUrl)),
+            title: Text(
+              demoPlaylist.songs[index].songTitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: Text(demoPlaylist.songs[index].artist),
+            contentPadding: EdgeInsetsDirectional.only(start: 8.0),
           ),
-          subtitle: Text(demoPlaylist.songs[index].artist),
-          contentPadding: EdgeInsetsDirectional.only(start: 8.0),
+          onTap: (){
+            //play song
+          },
         );
       },
     );
