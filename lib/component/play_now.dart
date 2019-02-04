@@ -5,12 +5,14 @@ import 'package:jmedia_player/component/songs.dart';
 
 class PlayNow extends StatefulWidget {
   int positionPlayer = 0;
+  final AudioPlayer player;
+  PlayNow(this.player);
   @override
   _PlayNowState createState() => _PlayNowState();
 }
 
 class _PlayNowState extends State<PlayNow> {
-  final AudioPlayer player = AudioPlayer();
+  
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -35,7 +37,7 @@ class _PlayNowState extends State<PlayNow> {
             ),
 
             //song title,artist name,and controls
-            ControllerPlayNow(jPlayer: player),
+            ControllerPlayNow(jPlayer: widget.player),
           ],
         )
       ],
