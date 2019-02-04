@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:jmedia_player/component/detail_song_play_now.dart';
 import 'package:jmedia_player/component/play_now.dart';
 import 'package:jmedia_player/component/songs.dart';
+import 'package:jmedia_player/pages/home_page.dart';
 import 'package:jmedia_player/theme/theme.dart';
 
 class ControllerPlayNow extends StatefulWidget {
@@ -18,7 +19,7 @@ class _ControllerPlayNowState extends State<ControllerPlayNow> {
   Future<void> play() async {
     setState(() {
       isProccessing = true;
-      PlayNow().positionPlayer = widget.positionSong;
+      MyHomePage().positionSong = widget.positionSong;
     });
     if (widget.jPlayer.state == AudioPlayerState.STOPPED ||
         widget.jPlayer.state == AudioPlayerState.PAUSED) {
